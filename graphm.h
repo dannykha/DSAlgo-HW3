@@ -2,6 +2,8 @@
 
 #include "nodedata.h"
 #include <iostream>
+#include <iomanip>
+#include "limits.h"
 
 
 using namespace std;
@@ -13,37 +15,41 @@ public:
 
     void buildGraph(ifstream &inFile);
 
-    bool insertEdge(int &from, int &to, int &weight);
+    bool insertEdge(int from, int to, int weight);
 
-    bool removeEdge(int &from, int &to);
+    bool removeEdge(int from, int to);
 
     void findShortestPath();
 
     void displayAll() const;
 
-    void display(const int &from, const int &to) const;
+    void display(const int from, const int to) const;
 
 
 
 private:
     struct TableType
     {
-        bool visited;
-        int dist;
-        int path;
+        bool visited; // whether node has been visite
+        int dist; // shortest distance from source known so far
+        int path; // previous node in path of min dist
     };
 
-    const static int MAXNODES = 101;
+    const static int MAXNODES = 101; 
 
-    NodeData data[MAXNODES];
+    NodeData data[MAXNODES]; // data for graph nodes
 
-    int C[MAXNODES][MAXNODES];
+    int C[MAXNODES][MAXNODES]; // cost array, the adjancy matrix
+ 
+    int size; // number of nodes in the graph
 
-    int size;
+    TableType T[MAXNODES][MAXNODES]; // stores visited, distance, path
 
-    TableType T[MAXNODES][MAXNODES];
+    void initialize();
 
-    void printPath(int &from, int &to) const;
+    int findNext(TableType temp[]);	
 
-    void printPathDisplay(int &from, int &to) const;
+    void findPath(int from, int to) const;
+
+    void findData(int from, int to) const;
 };
