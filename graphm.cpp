@@ -1,3 +1,21 @@
+// ------------------------------------------------ graphm.cpp ------------------------------------------------------
+// Danny Kha
+// CSS 343
+// Professor Dong Si
+// Creation Date: 4/26/22
+// Date of Last Modification: 5/7/22
+// --------------------------------------------------------------------------------------------------------------------
+// Purpose - The purpose of graphm is to implement Dijkstra shortest path algorithm upon a graph matrix
+// that is inputted from text files that will be read in.
+// -------------------------------------------------------------------------------------------------------------------- 
+// Notes - all inputs are assumed valid
+// graphm.cpp is the implementation of the declared class from graphm.h. 
+// iostream, iomanip, and limits.h were used to implement input, input manipulation, and integer maxs.
+// -------------------------------------------------------------------------------------------------------------------- 
+
+
+
+
 #include "graphm.h"
 
 
