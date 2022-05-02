@@ -27,18 +27,25 @@ using namespace std;
 class GraphM
 {
 public:
+    // Default Constructor
     GraphM();
-
+    
+    // Graph builder with input stream from data file and uses an adjancey matrix
     void buildGraph(ifstream &inFile);
 
+    // Function that inserts edges between from and to nodes with weights
     bool insertEdge(int from, int to, int weight);
 
+    // Function that froms an edge between from and to nodes
     bool removeEdge(int from, int to);
 
+    // Function that implements Dijkstra's shortest path algorithm
     void findShortestPath();
 
+    // Function that uses couts to display the algorithm is working
     void displayAll() const;
 
+    // Function taht uses couts to display the path between nodes
     void display(const int from, const int to) const;
 
 
@@ -51,6 +58,7 @@ private:
         int path; // previous node in path of min dist
     };
 
+    // Constant that sets the array size to a maximum value
     const static int MAXNODES = 101; 
 
     NodeData data[MAXNODES]; // data for graph nodes
@@ -61,11 +69,15 @@ private:
 
     TableType T[MAXNODES][MAXNODES]; // stores visited, distance, path
 
+    // Helper function of findShortestPath that initializes everything to not visited yet
     void initialize();
 
+    // Helper function that finds the next smallest next node in the table
     int findNext(TableType temp[]);	
 
+    // Helper function that finds the path between from and to nodes
     void findPath(int from, int to) const;
 
+    // Helper function that displays the nodes data between from and to nodes
     void findData(int from, int to) const;
 };

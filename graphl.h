@@ -1,41 +1,31 @@
-// ------------------------------------------------ graphl.h ------------------------------------------------------
-// Danny Kha
-// CSS 343
-// Professor Dong Si
-// Creation Date: 4/26/22
-// Date of Last Modification: 5/7/22
-// --------------------------------------------------------------------------------------------------------------------
-// Purpose - The purpose of graphl.h is to declare the functions implemented in graphl.cpp.
-// graphl is a class that reads in a text file, builds a graph, and preforms depth first search 
-// on the built graph from the inptuted text file. 
-// -------------------------------------------------------------------------------------------------------------------- 
-// Notes - graphl.h is the declaration of the declared class for graphl.cpp.
-// all the inputs are assumed valid.
-// iostream, iomanip, and limits.h were used to implement input, input manipulation, and integer maxs.
-// -------------------------------------------------------------------------------------------------------------------- 
-
 #pragma once
 
-#include "nodedata.h" 
-#include <iostream> // input output include
-#include <iomanip> // manipulating the input and output
-#include "limits.h" // used for integer max
+#include <iostream>
+#include "limits.h"
+#include "iomanip"
+#include "nodedata.h"
 
 class GraphL
 {
     public:
+        // Default constructor
         GraphL();
 
+        // Destructor
         ~GraphL();
 
+        // Function that builds a graph based on input file
         void buildGraph(ifstream &inFile);
 
-        void displayGraph() const;
-
+        // Function that utizlies depth first search to go through the graph
         void depthFirstSearch();
+
+        // Function that diplays the graph
+        void displayGraph() const;
     
     private:
-        static const int MAXNODES = 100;
+        // Constant max value of nodes in the array
+        static const int MAXNODES = 101;
 
         struct EdgeNode;      // forward reference for the compiler
 
@@ -49,11 +39,15 @@ class GraphL
             EdgeNode* nextEdge;
         };
 
-        void destroyGraph();
-
-        void depthFirstSearchHelper(int v);
-
+        // Declaring an array of graphnodes
         GraphNode nodeArray[MAXNODES];
 
+        // Declaring a variable for the size of the nodes in the graph
         int size;
+
+        // Helper function that helps destroy the graph
+        void destroyGraph();
+
+        // Helper function to preform depth first search
+        void depthFirstSearchHelper(int v);
 };

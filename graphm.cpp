@@ -13,17 +13,17 @@
 // iostream, iomanip, and limits.h were used to implement input, input manipulation, and integer maxs.
 // -------------------------------------------------------------------------------------------------------------------- 
 
-
-
-
 #include "graphm.h"
 
-
-// GOOD
+// ------------------------------------Constructor-----------------------------------------------  
+// Description: Constructor for an empty matrix table and initializes all the values
+// ----------------------------------------------------------------------------------------------
 GraphM::GraphM()
-{
+{   
+    // set size to 0
     this->size = 0;
 
+    // double for loop for the matrix table and setting them to max value (infinity) and visited false
     for (int i = 1; i < MAXNODES; i++)
     {
         for (int j = 1; j < MAXNODES; j++)
@@ -34,34 +34,39 @@ GraphM::GraphM()
             T[i][j].path = 0;
         }
     }
-}
+} // end of constructor
 
-// GOOD ish
+// ------------------------------------buildGraph()-----------------------------------------------  
+// Description: Builds a graph from a text file input and sets the weight of each node
+// ---------------------------------------------------------------------------------------------------  
 void GraphM::buildGraph(ifstream &inFile)
 {
-    inFile >> this->size;
-    string temp = "";
-    getline(inFile, temp);
+    int from, to, weight; // declaring from, to and weight for nodes
+    string line; // declaring a string variable line
+    inFile >> this->size; // setting the size
+    getline(inFile, line); // getting the first line of the file
 
+    // for loop that sets the data from the file
     for (int i = 1; i <= size; i++)
     {
         data[i].setData(inFile);
     }
 
-    int from;
-    int to;
-    int weight;
+    // while infile has the next three inputs of from to and weight of that node
     while (inFile >> from >> to >> weight)
     {
+        // if statement breaks when the node is at 0
         if (from == 0)
         {
-            break;
+            break; 
         }
-       this->C[from][to] = weight;
+       this->C[from][to] = weight; // setting the C table up
     }
-}
+} // end of buildGraph()
 
-// GOOD
+// ------------------------------------insertEdge()-----------------------------------------
+// Description: Creates and inserts an edge between two nodes and the specificed weight of that edge
+// ---------------------------------------------------------------------------------------------------  
 bool GraphM::insertEdge(int from, int to, int weight)
 {
     if (from > this->size || from < 1)
@@ -85,9 +90,11 @@ bool GraphM::insertEdge(int from, int to, int weight)
         this->C[from][to] = weight;
         return true;
     }
-}
+} // end of insertEdge()
 
-// GOOD
+// ------------------------------------removeEdge()-----------------------------------  
+// Description: Removes an edge from a given from and to nodes
+// ---------------------------------------------------------------------------------------------------  
 bool GraphM::removeEdge(const int from, const int to)
 {
     if (from < 1 || from > this->size)
@@ -106,27 +113,35 @@ bool GraphM::removeEdge(const int from, const int to)
     {
         this->C[from][to] = INT_MAX;
         return true;
-    }
-}
+    } 
+} // end of removeEdge()
 
-// GOOD
+// ------------------------------------findShortestPath()-----------------------------------  
+// Description: Function to find the shortest path between nodes using Dijkstra's algorithm throughout
+// the entire graph.
+// ---------------------------------------------------------------------------------------------------  
 void GraphM::findShortestPath()
 {
 	int v = 0;
 	int counter = 1;
 
+    // first initializing the graph to make evrything not visited
     initialize();
 
+    // first loop sets the distance of the source to 0
 	for (int source = 1; source <= size; source++)
 	{
 		T[source][source].dist = 0;
 
+        // main loop
 		while (counter != size)
 		{
-			v = findNext(T[source]);
+			v = findNext(T[source]); // searching to find that source node
 
-			T[source][v].visited = true;
+			T[source][v].visited = true; // source node
 
+            // for loop that goes through everything and does the Dijkastra algorithm
+            // uses "v" that found the source node location
 			for (int i = 1; i <= size; i++)
 			{
 				if (!T[source][i].visited && C[v][i] != INT_MAX)
@@ -140,13 +155,16 @@ void GraphM::findShortestPath()
 			}
 			counter++;
 		}
-		counter = 1;
+        counter = 1; // resets the counter back to 1
 	}
-}
+} // end of findShortestPath
 
-// GOOD
+// ------------------------------------initialize()-----------------------------------  
+// Description: Helper function to findShortestPath() by initializing everything to not being visited yet.
+// ---------------------------------------------------------------------------------------------------  
 void GraphM::initialize()
 {
+    // intiailizes everything in the T table to false
 	for (int i = 1; i <= size; i++)
 	{
 		for (int j = 1; j <= size; j++)
@@ -154,14 +172,17 @@ void GraphM::initialize()
 			T[i][j].visited = false;
 		}
 	}
-}
+} // end of initialize()
 
-// GOOD
+// ------------------------------------findNext()-----------------------------------  
+// Description: Used to find the next node in the graph and returns the next node once found.
+// ---------------------------------------------------------------------------------------------------  
 int GraphM::findNext(TableType temp[])
 {
 	int nextNode = 1;
 	int min = INT_MAX;
 
+    // for loop that searches for the next node
 	for (int i = 1; i <= size; i++)
 	{
 		if (temp[i].dist < min && !(temp[i].visited))
@@ -171,9 +192,11 @@ int GraphM::findNext(TableType temp[])
 		}
 	}
 	return nextNode;
-}
+} // end of findNext()
 
-// need work?
+// ------------------------------------displayAll()-----------------------------------  
+// Description: Used to display all the inforamtion with couts and displays the shortest path between each node
+// ---------------------------------------------------------------------------------------------------  
 void GraphM::displayAll() const
 {
     cout << "Description" << setw(20) << "From Node" << setw(12) << "To Node";
@@ -181,34 +204,38 @@ void GraphM::displayAll() const
 
 	for (int i = 1; i <= size; i++)
 	{
-		cout << this->data[i] << endl;
+		cout << this->data[i];
+        cout << endl;
 		for (int j = 1; j <= size; j++)
 		{
 			if (T[i][j].dist > 0 && T[i][j].dist < INT_MAX)
 			{
-				cout << setw(27) << i << setw(12) << j;
+                cout << setw(27) << i << setw(12) << j;
 				cout << setw(12) << T[i][j].dist << setw(10);
 				findPath(i, j);
 				cout << endl;
 			}
 			else if (i != j)
 			{
-				cout << setw(27) << i << setw(12) << j;
-				cout << setw(12) << "----" << endl;
+                cout << setw(27) << i << setw(12) << j;
+				cout << setw(12) << "----";
+                cout << endl;
 			}
 		}
 	}
-}
+} // end of displayAll()
 
-// need work?
+// ------------------------------------display()-----------------------------------  
+// Description: Uses couts to display the shortest distance with info of the path from and to nodes
+// ---------------------------------------------------------------------------------------------------  
 void GraphM::display(int from, int to) const
 {
     if ((from > size || from < 1) || (to > size || to < 1))	
 	{
 		cout << setw(7) << from << setw(9) << to;
-		cout << setw(11) << "----" << endl;
+		cout << setw(11) << "----";
+        cout << endl;
 	}
-
 	else if (T[from][to].dist != INT_MAX)
 	{
 		cout << setw(7) << from << setw(9) << to;
@@ -218,54 +245,57 @@ void GraphM::display(int from, int to) const
 		cout << endl;
 		findData(from, to);
 	}
-
 	else
 	{
 		cout << setw(7) << from << setw(9) << to;							
-		cout << setw(11) << "----" << endl;
+		cout << setw(11) << "----";
+        cout << endl;
 	}
 	cout << endl;
-}
+} // end of display()
 
-// need work
+// ------------------------------------findPath()-----------------------------------  
+// Description: Helper function to find paths between from and to nodes, used in displayAll and display
+// ---------------------------------------------------------------------------------------------------  
 void GraphM::findPath(int from, int to) const
 {
     if (T[from][to].dist == INT_MAX)
     {
         return; 
     }
-
-    if (from == to)
+    else if (from == to)
     {
         cout << to << " ";  
-
         return;
     }
+    else 
+    {
+        int pathData = to; 
+        findPath(from, to = T[from][to].path);
+        cout << pathData << " ";   
+    }
+} // end of findPath()
 
-    int pathData = to; 
-    findPath(from, to = T[from][to].path);
-
-    cout << pathData << " ";   
-}
-
-// need work?
+// ------------------------------------findData()-----------------------------------  
+// Description: Helper function to find the specific data between the from and to nodes. 
+// Used in display()
+// ---------------------------------------------------------------------------------------------------  
 void GraphM::findData(int from, int to) const
 {
     if (T[from][to].dist == INT_MAX)
     {
         return; 
-    }
-
-    if (from == to)
+    } 
+    else if (from == to)
     {
         cout << data[to] << endl;   
-
         return;
     }
-
-    int nodeData = to;
-
-    findData(from, to = T[from][to].path); 
-
-    cout << data[nodeData] << endl << endl;    
-}
+    else
+    {
+        int nodeData = to;
+        findData(from, to = T[from][to].path); 
+        cout << data[nodeData];
+        cout << endl << endl;
+    }
+} // end of findData()
