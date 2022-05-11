@@ -199,13 +199,13 @@ int GraphM::findNext(TableType temp[])
 // ---------------------------------------------------------------------------------------------------  
 void GraphM::displayAll() const
 {
-    cout << "Description" << setw(20) << "From Node" << setw(12) << "To Node";
-	cout << setw(14) << "Dijkstra's" << setw(8) << "Path" << endl;
+    cout << "Description" << setw(20) << "From node" << setw(12) << "To node";
+	cout << setw(14) << "Dijkstra's" << setw(7) << "Path" << endl;
 
 	for (int i = 1; i <= size; i++)
 	{
-		cout << this->data[i];
-        cout << endl;
+		cout << this->data[i] << endl << endl;
+
 		for (int j = 1; j <= size; j++)
 		{
 			if (T[i][j].dist > 0 && T[i][j].dist < INT_MAX)
@@ -233,8 +233,7 @@ void GraphM::display(int from, int to) const
     if ((from > size || from < 1) || (to > size || to < 1))	
 	{
 		cout << setw(7) << from << setw(9) << to;
-		cout << setw(11) << "----";
-        cout << endl;
+		cout << setw(11) << "----" << endl;
 	}
 	else if (T[from][to].dist != INT_MAX)
 	{
@@ -248,8 +247,7 @@ void GraphM::display(int from, int to) const
 	else
 	{
 		cout << setw(7) << from << setw(9) << to;							
-		cout << setw(11) << "----";
-        cout << endl;
+		cout << setw(11) << "----" << endl;
 	}
 	cout << endl;
 } // end of display()
@@ -289,14 +287,13 @@ void GraphM::findData(int from, int to) const
     else if (from == to)
     {
         cout << data[to];
-        cout << endl;   
+        cout << endl << endl; 
         return;
     }
     else
     {
         int nodeData = to;
         findData(from, to = T[from][to].path); 
-        cout << data[nodeData];
-        cout << endl << endl;
+        cout << data[nodeData] << endl << endl;
     }
 } // end of findData()

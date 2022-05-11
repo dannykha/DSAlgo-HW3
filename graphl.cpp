@@ -143,7 +143,7 @@ void GraphL::depthFirstSearch()
 void GraphL::depthFirstSearchHelper(int v)
 {
     // printing the first node and setting the first node to visited, then moves on to next
-    cout << setw(2) << v;  
+    cout << setw(3) << v;  
     nodeArray[v].visited = true;   
     EdgeNode* curr = nodeArray[v].edgeHead;
 
@@ -171,7 +171,7 @@ void GraphL::displayGraph() const
     for (int i = 1; i <= size; i++) 
     {
         // printing all the information in order
-        cout << "Node" << i << setw(10) << *nodeArray[i].data;
+        cout << "Node" << i << "         " << *nodeArray[i].data;
         cout << endl << endl;
 
         EdgeNode* curr = nodeArray[i].edgeHead; 
@@ -180,7 +180,7 @@ void GraphL::displayGraph() const
         while (curr != nullptr) 
         {
             // printing information in order
-            cout << setw(7) << "edge " << i << setw(2) << curr->adjGraphNode;
+            cout << setw(7) << "edge  " << i << setw(3) << curr->adjGraphNode;
             cout << endl;
             curr = curr->nextEdge;  // moving the pointer
         }
