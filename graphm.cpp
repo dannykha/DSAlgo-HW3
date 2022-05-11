@@ -288,7 +288,8 @@ void GraphM::findData(int from, int to) const
     } 
     else if (from == to)
     {
-        cout << data[to] << endl;   
+        cout << data[to];
+        cout << endl;   
         return;
     }
     else

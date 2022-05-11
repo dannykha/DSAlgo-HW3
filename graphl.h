@@ -1,3 +1,18 @@
+// ------------------------------------------------ graphl.h ------------------------------------------------------
+// Danny Kha
+// CSS 343
+// Professor Dong Si
+// Creation Date: 4/26/22
+// Date of Last Modification: 5/7/22
+// --------------------------------------------------------------------------------------------------------------------
+// Purpose - The purpose of graphl is to display graph information using adjancey list of graphs.
+// Reading in an input from a text file can be done and then depth first search is implemented.
+// -------------------------------------------------------------------------------------------------------------------- 
+// Notes - All inputs are assumed valid.
+// graphl.h is the decleration of all the functions that are implemented in graphl.cpp.
+// iostream, iomanip, and limits.h were used to implement input, input manipulation, and integer maxs.
+// -------------------------------------------------------------------------------------------------------------------- 
+
 #pragma once
 
 #include <iostream>

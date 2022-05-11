@@ -24,9 +24,9 @@ GraphL::GraphL()
 
     for (int i = 0; i < MAXNODES; i++)
     {
-        nodeArray[i].visited = false;
         nodeArray[i].edgeHead = nullptr;
         nodeArray[i].data = nullptr;
+        nodeArray[i].visited = false;
     }
 } // end of constructor
 
@@ -46,7 +46,7 @@ void GraphL::destroyGraph()
 {
     // loops through the entire array
     // then does checks and deletes and setting to nullptrs etc.
-    for (int i = 0; i <= size; i++)
+    for (int i = 1; i <= size; i++)
     {
         nodeArray[i].visited = false; 
         if (nodeArray[i].data != nullptr)
@@ -171,7 +171,7 @@ void GraphL::displayGraph() const
     for (int i = 1; i <= size; i++) 
     {
         // printing all the information in order
-        cout << "Node" << i << "      " << *nodeArray[i].data;
+        cout << "Node" << i << setw(10) << *nodeArray[i].data;
         cout << endl << endl;
 
         EdgeNode* curr = nodeArray[i].edgeHead; 
